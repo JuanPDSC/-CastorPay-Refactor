@@ -3,7 +3,7 @@
  * Demostración de descomposicion del antipatrón "El Dios"
  */
 
-// 1. Servicio de Validación
+// Servicio de Validación
 class ValidationService {
   static validatePaymentData(data) {
     if (!data.clientName || !data.email) throw new Error("Datos de cliente incompletos.");
@@ -13,7 +13,7 @@ class ValidationService {
   }
 }
 
-// 2. Servicio de Base de Datos / Transacción
+// Servicio de Base de Datos / Transacción
 class TransactionService {
   static async processPayment(amount, cardNumber) {
     // Simulación de respuesta de BD / Gateway
@@ -25,7 +25,7 @@ class TransactionService {
   }
 }
 
-// 3. Servicio de Notificaciones
+// Servicio de Notificaciones
 class NotificationService {
   static sendReceiptEmail(email, transactionId) {
     return `Notificación enviada a ${email} para el pago ${transactionId}`;
@@ -39,7 +39,7 @@ class BillingService {
   }
 }
 
-// --- ORQUESTADOR (Controlador de Interfaz) ---
+// ORQUESTADOR (Controlador de Interfaz)
 document.getElementById('paymentForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   
@@ -71,12 +71,12 @@ document.getElementById('paymentForm').addEventListener('submit', async (e) => {
     appendLog(` Transacción Aprobada: ${txResult.transactionId}`, true);
 
     // Paso 3: Notificación
-    appendLog("📧 [NotificationService] Generando aviso...");
+    appendLog("[NotificationService] Generando aviso...");
     const notifMsg = NotificationService.sendReceiptEmail(paymentData.email, txResult.transactionId);
     appendLog(notifMsg);
 
     // Paso 4: Facturación
-    appendLog("🧾 [BillingService] Procesando comprobante...");
+    appendLog(" [BillingService] Procesando comprobante...");
     const billMsg = BillingService.generateInvoice(paymentData.clientName, paymentData.amount, txResult.transactionId);
     appendLog(billMsg, true);
 
