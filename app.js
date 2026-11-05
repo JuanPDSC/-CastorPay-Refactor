@@ -1,8 +1,3 @@
-/**
- * REFACTORIZACIÓN CASTORPAY
- * Demostración de descomposicion del antipatrón "El Dios"
- */
-
 // Servicio de Validación
 class ValidationService {
   static validatePaymentData(data) {
@@ -32,14 +27,14 @@ class NotificationService {
   }
 }
 
-// 4. Servicio de Facturación
+// Servicio de Facturación
 class BillingService {
   static generateInvoice(clientName, amount, transactionId) {
     return `Factura generada exitosamente para ${clientName} por un total de $${amount} (ID: ${transactionId})`;
   }
 }
 
-// ORQUESTADOR (Controlador de Interfaz)
+// Controlador de Interfaz
 document.getElementById('paymentForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   
@@ -61,21 +56,23 @@ document.getElementById('paymentForm').addEventListener('submit', async (e) => {
   };
 
   try {
-    // Paso 1: Validación
+    // Pasos
+    
+    // Validación
     appendLog(" [ValidationService] Validando datos de entrada...");
     ValidationService.validatePaymentData(paymentData);
 
-    // Paso 2: Procesamiento
+    // Procesamiento
     appendLog(" [TransactionService] Conectando con la pasarela...");
     const txResult = await TransactionService.processPayment(paymentData.amount, paymentData.cardNumber);
     appendLog(` Transacción Aprobada: ${txResult.transactionId}`, true);
 
-    // Paso 3: Notificación
+    // Notificación
     appendLog("[NotificationService] Generando aviso...");
     const notifMsg = NotificationService.sendReceiptEmail(paymentData.email, txResult.transactionId);
     appendLog(notifMsg);
 
-    // Paso 4: Facturación
+    // Facturación
     appendLog(" [BillingService] Procesando comprobante...");
     const billMsg = BillingService.generateInvoice(paymentData.clientName, paymentData.amount, txResult.transactionId);
     appendLog(billMsg, true);
