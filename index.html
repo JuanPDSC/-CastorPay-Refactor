@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CastorPay - Módulo de Pagos (Refactorizado)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🦫 CastorPay</h1>
+      <p>Sistema de Procesamiento de Pagos - Arquitectura Limpia</p>
+    </header>
+
+    <main class="grid">
+      <!-- Formulario de Pago -->
+      <section class="card form-section">
+        <h2>Procesar Nuevo Pago</h2>
+        <form id="paymentForm">
+          <div class="form-group">
+            <label for="clientName">Nombre del Cliente</label>
+            <input type="text" id="clientName" placeholder="Juan Pérez" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Correo Electrónico</label>
+            <input type="email" id="email" placeholder="juan@ejemplo.com" required>
+          </div>
+          <div class="form-group">
+            <label for="cardNumber">Número de Tarjeta</label>
+            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="16" required>
+          </div>
+          <div class="form-group">
+            <label for="amount">Monto ($)</label>
+            <input type="number" id="amount" placeholder="500.00" step="0.01" required>
+          </div>
+          <button type="submit" id="btnPay">Ejecutar Transacción</button>
+        </form>
+      </section>
+
+      <!-- Panel de Servicios Desacoplados (Demostración de SRP) -->
+      <section class="card console-section">
+        <h2>Monitoreo de Servicios (SRP)</h2>
+        <div id="logs" class="logs-container">
+          <p class="placeholder">Esperando inicio de transacción...</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
